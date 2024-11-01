@@ -128,6 +128,7 @@ if uploaded_file_institution is not None:
     except Exception as e:
         st.error(f"파일을 읽는 중 오류가 발생했습니다: {e}")
 
+
 # 네 번째 기능: 미국, 한국, 공동 출판물 수 시각화
 st.header("US, Korean, and Joint US-KR Publications")
 uploaded_us = st.file_uploader("미국 논문 수 CSV 파일을 업로드하세요.")
@@ -180,7 +181,7 @@ if uploaded_us is not None and uploaded_kr is not None and uploaded_joint is not
         # y축 최대값 설정
         ax.set_ylim(0, y_max)
 
-        # x축 연도 레이블 설정 (년도 반전)
+        # x축 연도 레이블 설정
         ax.set_xticks(x)
         ax.set_xticklabels(df_merged['Publication years'], rotation=0)
         ax.set_xlabel('Publication Year')
@@ -188,7 +189,7 @@ if uploaded_us is not None and uploaded_kr is not None and uploaded_joint is not
         ax.set_title('US, Korean, and Joint US-KR Publications by Year')
         ax.legend()
 
-        # x축 순서 반전 (년도 반전)
+        # x축 순서 반전 (최신 연도가 왼쪽에 오도록 설정)
         plt.gca().invert_xaxis()  # x축 반전
 
         plt.tight_layout()
