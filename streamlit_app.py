@@ -149,10 +149,14 @@ if uploaded_us is not None and uploaded_kr is not None and uploaded_joint is not
             df['Publication years'] = df['Publication years'].astype(int)
             df['Publications'] = df['Publications'].astype(int)
 
+        # 데이터프레임 병합
         df_merged_us = pd.merge(df_us, df_joint, on='Publication years', how='outer', suffixes=('_US', '_Joint'))
         df_merged = pd.merge(df_merged_us, df_kr, on='Publication years', how='outer', suffixes=('', '_KR'))
 
         df_merged.fillna(0, inplace=True)
+
+        # Publication years에 따라 정렬 (과거가 왼쪽, 최신이 오른쪽)
+        df_merged.sort_values('Publication years', inplace=True)
 
         max_value = max(df_merged['Publications_US'].max(), df_merged['Publications'].max(), df_merged['Publications_Joint'].max())
         y_max = max_value * 1.3
@@ -188,9 +192,6 @@ if uploaded_us is not None and uploaded_kr is not None and uploaded_joint is not
         ax.set_ylabel('Number of Publications')
         ax.set_title('US, Korean, and Joint US-KR Publications by Year')
         ax.legend()
-
-        # x축 순서 반전 (최신 연도가 왼쪽에 오도록 설정)
-        plt.gca().invert_xaxis()  # x축 반전
 
         plt.tight_layout()
 
