@@ -676,3 +676,4 @@ elif page == "구글 트렌드":
           plt.legend()
           st.pyplot(plt)
           
+
